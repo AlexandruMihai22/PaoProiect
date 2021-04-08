@@ -10,5 +10,17 @@ public class Camera extends Product{
         this.megapixels = megapixels;
     }
 
+    public int getMegapixels() {
+        return megapixels;
+    }
 
+    public void setMegapixels(int megapixels) {
+        this.megapixels = megapixels;
+    }
+
+    public void displayExtra() {
+        System.out.println("Numarul de megapixeli: " + this.megapixels);
+        System.out.println();
+
+    }
 }

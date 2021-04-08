@@ -10,4 +10,17 @@ public class Laptop extends Product{
         this.procesor = procesor;
     }
 
+    public String getProcesor() {
+        return procesor;
+    }
+
+    public void setProcesor(String procesor) {
+        this.procesor = procesor;
+    }
+
+    public void displayExtra() {
+        System.out.println("Tipul procesorului: " + this.procesor);
+        System.out.println();
+
+    }
 }

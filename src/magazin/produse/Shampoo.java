@@ -23,7 +23,7 @@ public class Shampoo extends Product {
     }
 
     public void displayExtra() {
-        System.out.println(this.hairType);
+        System.out.println("Tipul parului: " + this.hairType);
         System.out.println();
 
     }

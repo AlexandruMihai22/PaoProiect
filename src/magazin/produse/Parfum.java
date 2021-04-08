@@ -24,7 +24,7 @@ public class Parfum extends Product {
     }
 
     public void displayExtra() {
-        System.out.println(this.parfumType);
+        System.out.println("Tipul parfumului: " + this.parfumType);
         System.out.println();
 
     }

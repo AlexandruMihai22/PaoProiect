@@ -39,12 +39,12 @@ public class Distributor {
         this.name = name;
     }
 
-    public void display(){
-        System.out.println(this.name);
+    public void display() {
+        System.out.println("Nume distribuitor: " + this.name);
         System.out.println();
-        System.out.println(this.address);
+        System.out.println("Adresa distribuitor: " + this.address);
         System.out.println();
-        System.out.println(this.phoneNumber);
+        System.out.println("Numar de telefon distribuitor: " + this.phoneNumber);
         System.out.println();
     }
 

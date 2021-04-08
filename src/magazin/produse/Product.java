@@ -40,11 +40,11 @@ public abstract class Product implements Comparable<Product> {
     }
 
     public void display() {
-        System.out.println(this.name);
+        System.out.println("Numele: " + this.name);
         System.out.println();
-        System.out.println(this.price);
+        System.out.println("Pretul: " + this.price);
         System.out.println();
-        System.out.println(this.color);
+        System.out.println("Culoarea: " + this.color);
         System.out.println();
         this.distributor.display();
         this.displayExtra();
