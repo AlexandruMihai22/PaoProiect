@@ -1,0 +1,16 @@
+
+=	java:S1084")Either remove or fill this block of code.(œÂõn
+C	java:S108@")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+O
+java:S1854":Remove this useless assignment to local variable "stocks".(“ÿûc
+C	java:S108M")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+C	java:S108+")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+C	java:S108&")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+C	java:S108I")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+C	java:S108W")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+k	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¶çÿşÿÿÿÿ
+@
+java:S1481"+Remove this unused "stocks" local variable.(“ÿûc
+C	java:S108R")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+C	java:S108D")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
+C	java:S108;")Either remove or fill this block of code.(ÒÌâ–øÿÿÿÿ
