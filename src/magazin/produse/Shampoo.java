@@ -22,10 +22,9 @@ public class Shampoo extends Product {
 
     }
 
-    public void displayExtra() {
-        System.out.println(this.hairType);
-        System.out.println();
-
+    public String toString() {
+        return ("Numele: " + this.getName() + " " + "Pretul: " + this.getPrice() + " " +
+                "Culoarea: " + this.getColor() + " " + "Distribuitor: " + this.getDistributor().getName() + " " + "Tipul parului: " + this.getHairType());
     }
 
 }

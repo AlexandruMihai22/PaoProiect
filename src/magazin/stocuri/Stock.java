@@ -19,7 +19,7 @@ public class Stock implements Comparable<Stock> {
     public Stock(String name, Product product, int quantity){
         this.name = name;
         if(product instanceof Shampoo||product instanceof Parfum) {
-            this.pc = new PersonalCare(product, quantity);
+            this.pc = new PersonalCare(product, quantity, " ");
             this.el = new Electronics();
         }
         if(product instanceof Laptop ||product instanceof Camera) {

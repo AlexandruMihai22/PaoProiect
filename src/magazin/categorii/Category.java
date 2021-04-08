@@ -34,26 +34,13 @@ public abstract class Category {
     }
 
     public void removeProduct(String productName) {
-//        for (Map.Entry<Product, Integer> entry : products.entrySet())
-//            if (entry.getKey().getName().equals(productName))
-//                this.products.remove(entry.getKey());
-            products.entrySet().stream().filter(entry -> !entry.getKey().getName().equals(productName));
+        this.products.keySet().removeIf(key -> key.getName().equals(productName));
     }
 
     public boolean SearchProduct(String productName) {
-//       for (Map.Entry<Product, Integer> entry : products.entrySet())
-//            if (entry.getKey().getName().equals(productName))
-//                return true;
-//            else
-//                return false;
-//        return false;
-        return products.entrySet().stream().anyMatch(entry -> entry.getKey().getName().equals(productName));
-    }
-
-    public void display() {
-        for (Map.Entry<Product, Integer> entry : products.entrySet())
-            entry.getKey().display();
-
+       for (Map.Entry<Product, Integer> entry : products.entrySet())
+           return entry.getKey().getName().equals(productName);
+        return false;
     }
 
     public void modifyPrice(String productName, int newPrice) {
@@ -80,6 +67,5 @@ public abstract class Category {
                  p=entry.getKey();
         return p;
     }
-
 
 }

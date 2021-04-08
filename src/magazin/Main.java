@@ -13,8 +13,8 @@ public class Main {
     public static void main(String[] args) {
 
         int i;
-        Distributor distributor1 = new Distributor("Euro Italia", "Milano, Str 12", "0822222");
-        Distributor distributor2 = new Distributor("Ro distrib", "Bucuresti, Str Dunarii", "0723456");
+        Distributor distributor1 = new Distributor("EuroItalia", "Milano, Str 12", "0822222");
+        Distributor distributor2 = new Distributor("RoDistrib", "Bucuresti, Str Dunarii", "0723456");
         Parfum parfum1 = new Parfum("Sauvage", 100, "blue", distributor1, "fresh");
         Shampoo shampoo1 = new Shampoo("Gerovi", 50, "white", distributor1, "uscat");
         Laptop laptop1 = new Laptop("ddd",1000,"black", distributor2,"dd");
@@ -22,13 +22,13 @@ public class Main {
         Map<Product, Integer> map1 = new HashMap<>();
         map1.put(parfum1,5);
         map1.put(shampoo1,10);
-        PersonalCare pc = new PersonalCare(map1);
+        PersonalCare pc = new PersonalCare(map1, "Produsele trebuiesc depozitate corespunzator");
         Map<Product, Integer> map2 = new HashMap<>();
         map2.put(laptop1,5);
         map2.put(camera1,10);
         Electronics el = new Electronics(map2);
 
-        Stock stock1 = new Stock("Stock_martie", pc, el);
+        Stock stock1 = new Stock("StockMartie", pc, el);
 
         Scanner in=new Scanner(System.in);
 
@@ -108,6 +108,7 @@ public class Main {
                 System.out.println("Care este numele stocului?");
                 String stockName=in.next();
                 Services.removeProduct(stocks, stockName, productName);
+                Services.display(stocks);
             }
 
             else if (number==3) {
@@ -131,6 +132,7 @@ public class Main {
                 System.out.println("Care este procentajul % cu care vreti sa mariti pretul?");
                 int percentage=in.nextInt();
                 Services.increasePrice(stocks, stockName, percentage);
+                Services.display(stocks);
             }
 
             else if(number==6) {
@@ -158,11 +160,20 @@ public class Main {
                 String stockName=in.next();
                 Services.deleteStock(stocks, stockName);
             }
-
             else if(number==10) {
                 System.out.println("Care este numele stocului?");
                 String stockName=in.next();
                 Services.mostExpensive(stocks, stockName);
+            }
+
+            else if(number==11) {
+                Services.printParfums(stocks);
+            }
+
+            else if(number==12) {
+                System.out.println("Care este numele distribuitorului?");
+                String distributorName=in.next();
+                Services.distributorProducts (stocks, distributorName);
             }
 
 

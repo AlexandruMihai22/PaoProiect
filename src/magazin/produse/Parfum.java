@@ -23,10 +23,10 @@ public class Parfum extends Product {
 
     }
 
-    public void displayExtra() {
-        System.out.println(this.parfumType);
-        System.out.println();
-
+    @Override
+    public String toString() {
+        return ("Numele: " + this.getName() + " " + "Pretul: " + this.getPrice() + " " +
+                "Culoarea: " + this.getColor() + " " + "Distribuitor: " + this.getDistributor().getName() + " " + "Tipul parfumului: " + this.getParfumType());
     }
 
 }

@@ -24,9 +24,9 @@ public class Services {
                 "7.Puteti verifica pretul unui produs dintr-un stoc\n"+
                 "8.Puteti adauga un stoc \n"+
                 "9.Puteti sterge un stoc \n"+
-                "10.Puteti afisa toate produsele de tip parfum \n"+
-                "11.Puteti afisa cel mai scump produs dintr un stoc\n"+
-                "12.Puteti afisa distribuitorul cu cele mai multe produse dintr-un stoc\n"
+                "10.Puteti afisa cel mai scump produs dintr un stoc\n"+
+                "11.Puteti afisa toate produsele de tip parfum \n"+
+                "12.Puteti afisa toate produsele de la un anumit distribuitor\n"
         );
     }
 
@@ -39,8 +39,10 @@ public class Services {
 
     public static void display(Set<Stock> stocks){
         for(Stock s :stocks) {
-            s.getEl().display();
-            s.getPc().display();
+            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
+                System.out.println(entry.getKey());
+            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
+                System.out.println(entry.getKey());
         }
     }
 
@@ -48,7 +50,7 @@ public class Services {
         for(Stock s :stocks)
             if(s.getName().equals(stockName))
             {   if (s.getPc().SearchProduct(productName))
-                s.getPc().removeProduct(productName);
+                    s.getPc().removeProduct(productName);
                 if (s.getEl().SearchProduct(productName))
                     s.getEl().removeProduct(productName);
             }
@@ -100,9 +102,9 @@ public class Services {
         for(Stock s :stocks)
             if(s.getName().equals(stockName)) {
                 if (s.getPc().mostExpensive().getPrice() > s.getEl().mostExpensive().getPrice())
-                    s.getPc().mostExpensive().display();
+                    System.out.println(s.getPc().mostExpensive());
                 else
-                    s.getEl().mostExpensive().display();
+                    System.out.println(s.getEl().mostExpensive());
             }
     }
 
@@ -213,6 +215,25 @@ public class Services {
 
     public static void deleteStock(Set<Stock> stocks, String stockName) {
         stocks.removeIf(s -> s.getName().equals(stockName));
+    }
+
+    public static void distributorProducts (Set<Stock> stocks, String distributorName) {
+        for(Stock s :stocks) {
+            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
+                if(entry.getKey().getDistributor().getName().equals(distributorName))
+                    System.out.println(entry.getKey());
+            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
+                if(entry.getKey().getDistributor().getName().equals(distributorName))
+                    System.out.println(entry.getKey());
+        }
+    }
+
+    public static void printParfums (Set<Stock> stocks) {
+        for(Stock s :stocks) {
+            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
+                if(entry.getKey() instanceof Parfum)
+                    System.out.println(entry.getKey());
+        }
     }
 
 

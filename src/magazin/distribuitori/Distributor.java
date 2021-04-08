@@ -39,13 +39,9 @@ public class Distributor {
         this.name = name;
     }
 
-    public void display(){
-        System.out.println(this.name);
-        System.out.println();
-        System.out.println(this.address);
-        System.out.println();
-        System.out.println(this.phoneNumber);
-        System.out.println();
+    @Override
+    public String toString() {
+        return("Nume distribuitor: " + this.name + " " + "Adresa distribuitor: " + this.address + " " + "Numar de telefon distribuitor: " + this.phoneNumber);
     }
 
 }

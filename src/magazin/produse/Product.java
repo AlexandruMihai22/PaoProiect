@@ -39,20 +39,8 @@ public abstract class Product implements Comparable<Product> {
         this.color = color;
     }
 
-    public void display() {
-        System.out.println(this.name);
-        System.out.println();
-        System.out.println(this.price);
-        System.out.println();
-        System.out.println(this.color);
-        System.out.println();
-        this.distributor.display();
-        this.displayExtra();
-    }
-
-    public void displayExtra() {
-
-
+    public Distributor getDistributor() {
+        return distributor;
     }
 
     public int compareTo(Product product) {
