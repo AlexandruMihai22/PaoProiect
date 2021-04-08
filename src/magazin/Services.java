@@ -1,8 +1,10 @@
 package magazin;
 
+import magazin.distribuitori.Distributor;
 import magazin.produse.*;
 import magazin.stocuri.Stock;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -25,19 +27,16 @@ public class Services {
                 "10.Puteti afisa toate produsele de tip parfum \n"+
                 "11.Puteti afisa cel mai scump produs dintr un stoc\n"+
                 "12.Puteti afisa distribuitorul cu cele mai multe produse dintr-un stoc\n"
-
         );
     }
 
-    public static void addProduct(Set<Stock> stocks, String stockName, Product product, int numberOfProducts) {
-        for(Stock s :stocks)
-            if(s.getName().equals(stockName))
+    public static void addProduct(Stock s, Product product, int numberOfProducts) {
                 if(product instanceof Shampoo ||product instanceof Parfum)
                     s.getPc().addProduct(product, numberOfProducts);
                 else if(product instanceof Laptop ||product instanceof Camera)
                     s.getEl().addProduct(product, numberOfProducts);
-
     }
+
     public static void display(Set<Stock> stocks){
         for(Stock s :stocks) {
             s.getEl().display();
@@ -104,14 +103,112 @@ public class Services {
                     s.getPc().mostExpensive().display();
                 else
                     s.getEl().mostExpensive().display();
-
             }
     }
 
     public static void addStock(Set<Stock> stocks) {
         Scanner in=new Scanner(System.in);
-        System.out.println("");
+        System.out.println("Introduceti numele stocului");
+        String stockName=in.next();
+        Stock stock = new Stock(stockName);
 
+        System.out.println("Cate produse de tip Parfum doriti sa aiba stocul?");
+        int nrParfum=in.nextInt();
+        for(int i = 0; i < nrParfum; i++ ) {
+            System.out.println("Care este numele produsului?");
+            String productName = in.next();
+            System.out.println("Care este pretul produsului?");
+            int productPrice = in.nextInt();
+            System.out.println("Care este culoarea produsului?");
+            String productColor = in.next();
+            System.out.println("Care este tipul parfumului");
+            String parfumType = in.next();
+            System.out.println("Cate produse de acest tip se afla in stoc?");
+            int nr = in.nextInt();
+            System.out.println("Care este numele distribuitorului?");
+            String distributorName = in.next();
+            System.out.println("Care este adresa distribuitorului?");
+            String distributorAddress = in.next();
+            System.out.println("Care este numarul de telefon al distribuitorului?");
+            String distributorPhoneNumber = in.next();
+            Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            Parfum parfum = new Parfum(productName, productPrice, productColor, productDistributor, parfumType);
+            addProduct(stock, parfum , nr);
+        }
+
+        System.out.println("Cate produse de tip Sampon doriti sa aiba stocul?");
+        int nrShampoo=in.nextInt();
+        for(int i = 0; i < nrShampoo; i++ ) {
+            System.out.println("Care este numele produsului?");
+            String productName = in.next();
+            System.out.println("Care este pretul produsului?");
+            int productPrice = in.nextInt();
+            System.out.println("Care este culoarea produsului?");
+            String productColor = in.next();
+            System.out.println("Care este tipul parfumului");
+            String shampooType = in.next();
+            System.out.println("Cate produse de acest tip se afla in stoc?");
+            int nr = in.nextInt();
+            System.out.println("Care este numele distribuitorului?");
+            String distributorName = in.next();
+            System.out.println("Care este adresa distribuitorului?");
+            String distributorAddress = in.next();
+            System.out.println("Care este numarul de telefon al distribuitorului?");
+            String distributorPhoneNumber = in.next();
+            Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            Shampoo shampoo = new Shampoo(productName, productPrice, productColor, productDistributor, shampooType);
+            addProduct(stock, shampoo , nr);
+        }
+
+        System.out.println("Cate produse de tip Laptop doriti sa aiba stocul?");
+        int nrLaptop=in.nextInt();
+        for(int i = 0; i < nrLaptop; i++ ) {
+            System.out.println("Care este numele produsului?");
+            String productName = in.next();
+            System.out.println("Care este pretul produsului?");
+            int productPrice = in.nextInt();
+            System.out.println("Care este culoarea produsului?");
+            String productColor = in.next();
+            System.out.println("Care este tipul procesorului");
+            String procesorType = in.next();
+            System.out.println("Cate produse de acest tip se afla in stoc?");
+            int nr = in.nextInt();
+            System.out.println("Care este numele distribuitorului?");
+            String distributorName = in.next();
+            System.out.println("Care este adresa distribuitorului?");
+            String distributorAddress = in.next();
+            System.out.println("Care este numarul de telefon al distribuitorului?");
+            String distributorPhoneNumber = in.next();
+            Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            Laptop laptop = new Laptop(productName, productPrice, productColor, productDistributor, procesorType);
+            addProduct(stock, laptop , nr);
+        }
+
+        System.out.println("Cate produse de tip Camera doriti sa aiba stocul?");
+        int nrCamera=in.nextInt();
+        for(int i = 0; i < nrCamera; i++ ) {
+            System.out.println("Care este numele produsului?");
+            String productName = in.next();
+            System.out.println("Care este pretul produsului?");
+            int productPrice = in.nextInt();
+            System.out.println("Care este culoarea produsului?");
+            String productColor = in.next();
+            System.out.println("Care este tipul procesorului");
+            int megapixels = in.nextInt();
+            System.out.println("Cate produse de acest tip se afla in stoc?");
+            int nr = in.nextInt();
+            System.out.println("Care este numele distribuitorului?");
+            String distributorName = in.next();
+            System.out.println("Care este adresa distribuitorului?");
+            String distributorAddress = in.next();
+            System.out.println("Care este numarul de telefon al distribuitorului?");
+            String distributorPhoneNumber = in.next();
+            Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            Camera camera = new Camera(productName, productPrice, productColor, productDistributor, megapixels);
+            addProduct(stock, camera , nr);
+        }
+
+        stocks.add(stock);
     }
 
     public static void deleteStock(Set<Stock> stocks, String stockName) {

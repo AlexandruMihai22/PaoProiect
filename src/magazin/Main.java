@@ -36,7 +36,6 @@ public class Main {
         abc.add(stock1);
         Set<Stock> stocks = new TreeSet<>(abc);
 
-        Services.addProduct(stocks,"Stock_martie", new Laptop("fd", 33,"334f", distributor1,"dd"), 5);
 
         Services.display();
         System.out.println("Cate servicii doriti?");
@@ -62,35 +61,43 @@ public class Main {
                 int productPrice=in.nextInt();
                 System.out.println("Care este culoarea produsului?");
                 String productColor=in.next();
-                System.out.println("Care este distribuitorul produsului? 1 - Euro Italia, 2 - Ro distrib");
-                int d=in.nextInt();
-                Distributor productDistributor;
-                if (d==1)
-                    productDistributor=distributor1;
-                else
-                    productDistributor=distributor2;
+                System.out.println("Care este numele distribuitorului?");
+                String distributorName = in.next();
+                System.out.println("Care este adresa distribuitorului?");
+                String distributorAddress = in.next();
+                System.out.println("Care este numarul de telefon al distribuitorului?");
+                String distributorPhoneNumber = in.next();
+                Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
 
                 if(x==1)
                 {   System.out.println("Care este tipul parului");
                     String hairType=in.next();
-                    Services.addProduct(stocks, stockName, new Shampoo(productName, productPrice, productColor, productDistributor, hairType), numberOfProducts);
+                    for(Stock s :stocks)
+                        if(s.getName().equals(stockName))
+                    Services.addProduct(s, new Shampoo(productName, productPrice, productColor, productDistributor, hairType), numberOfProducts);
                 }
 
                 if(x==2) {
                     System.out.println("Care este tipul parfumului?");
                     String parfumType=in.next();
-                    Services.addProduct(stocks, stockName, new Parfum(productName, productPrice, productColor, productDistributor, parfumType), numberOfProducts);
+                    for(Stock s :stocks)
+                        if(s.getName().equals(stockName))
+                    Services.addProduct(s, new Parfum(productName, productPrice, productColor, productDistributor, parfumType), numberOfProducts);
                 }
 
                 if(x==3) {
                     System.out.println("Care este numarul de megapixeli?");
                     int megapixels=in.nextInt();
-                    Services.addProduct(stocks, stockName, new Camera(productName, productPrice, productColor, productDistributor, megapixels), numberOfProducts);
+                    for(Stock s :stocks)
+                        if(s.getName().equals(stockName))
+                    Services.addProduct(s, new Camera(productName, productPrice, productColor, productDistributor, megapixels), numberOfProducts);
                 }
                 if(x==4) {
                     System.out.println("Care este tipul procesorului?");
                     String procesorType=in.next();
-                    Services.addProduct(stocks, stockName, new Laptop(productName, productPrice, productColor, productDistributor, procesorType), numberOfProducts);
+                    for(Stock s :stocks)
+                        if(s.getName().equals(stockName))
+                    Services.addProduct(s, new Laptop(productName, productPrice, productColor, productDistributor, procesorType), numberOfProducts);
                 }
                 Services.display(stocks);
 
@@ -143,28 +150,21 @@ public class Main {
             }
 
             else if(number==8) {
-
-
+                Services.addStock(stocks);
             }
 
             else if(number==9) {
                 System.out.println("Care este numele stocului pe care doriti sa il stergeti?");
                 String stockName=in.next();
                 Services.deleteStock(stocks, stockName);
-
             }
 
             else if(number==10) {
                 System.out.println("Care este numele stocului?");
                 String stockName=in.next();
                 Services.mostExpensive(stocks, stockName);
-
             }
 
-            else if(number==11) {
-                Services.addStock(stocks);
-
-            }
 
         }
 
