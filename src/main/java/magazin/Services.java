@@ -6,6 +6,7 @@ import magazin.stocuri.Stock;
 
 import java.io.BufferedWriter;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -45,29 +46,34 @@ public class Services {
         for(Stock s :stocks) {
             for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet()) {
                 if (entry.getKey() instanceof Laptop) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Laptop) entry.getKey()).getProcesor()};
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Laptop) entry.getKey()).getProcesor(), Integer.toString(entry.getValue())};
                     Singleton.getInstance().writeProducts("Laptops.csv", data);
                 }
                 if (entry.getKey() instanceof Camera) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), Integer.toString(((Camera) entry.getKey()).getMegapixels())};
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), Integer.toString(((Camera) entry.getKey()).getMegapixels()), Integer.toString(entry.getValue())};
                     Singleton.getInstance().writeProducts("Cameras.csv", data);
                 }
             }
             for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet()) {
                 if (entry.getKey() instanceof Parfum) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Parfum) entry.getKey()).getParfumType()};
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Parfum) entry.getKey()).getParfumType(), Integer.toString(entry.getValue())};
                     Singleton.getInstance().writeProducts("Parfums.csv", data);
                 }
                 if (entry.getKey() instanceof Shampoo) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Shampoo) entry.getKey()).getHairType()};
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Shampoo) entry.getKey()).getHairType(), Integer.toString(entry.getValue())};
                     Singleton.getInstance().writeProducts("Shampoos.csv", data);
                 }
             }
         }
     }
 
-    public static void addProduct(Stock s, Product product, int numberOfProducts) {
+    public static void actionCompleted(String name){
+        String [] data = {name, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date())};
+        Singleton.getInstance().writeProducts("Actions.csv", data);
+    }
 
+    public static void addProduct(Stock s, Product product, int numberOfProducts) {
+        actionCompleted("addProduct");
         if(product instanceof Shampoo ||product instanceof Parfum)
             s.getPc().addProduct(product, numberOfProducts);
         else if(product instanceof Laptop ||product instanceof Camera)
@@ -75,6 +81,7 @@ public class Services {
     }
 
     public static void display(Set<Stock> stocks){
+        actionCompleted("display");
         for(Stock s :stocks) {
             for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
                 System.out.println(entry.getKey());
@@ -84,6 +91,7 @@ public class Services {
     }
 
     public static void removeProduct(Set<Stock> stocks, String stockName, String productName) {
+        actionCompleted("removeProduct");
         for(Stock s :stocks)
             if(s.getName().equals(stockName))
             {   if (s.getPc().SearchProduct(productName))
@@ -94,6 +102,7 @@ public class Services {
     }
 
     public static void modifyPrice(Set<Stock> stocks, String stockName, String productName, int newPrice) {
+        actionCompleted("modifyPrice");
         for(Stock s :stocks)
             if(s.getName().equals(stockName))
             {   if (s.getPc().SearchProduct(productName))
@@ -104,6 +113,7 @@ public class Services {
     }
 
     public static void checkPrice(Set<Stock> stocks, String stockName, String productName) {
+        actionCompleted("checkPrice");
         for (Stock s : stocks)
             if (s.getName().equals(stockName)) {
                 if (s.getPc().SearchProduct(productName)) {
@@ -120,6 +130,7 @@ public class Services {
     }
 
     public static void increasePrice(Set<Stock> stocks, String stockName, int percentage) {
+        actionCompleted("increasePrice");
         for(Stock s :stocks)
             if(s.getName().equals(stockName)) {
                 s.getPc().increasePrice(percentage);
@@ -128,6 +139,7 @@ public class Services {
     }
 
     public static void decreasePrice(Set<Stock> stocks, String stockName, int percentage) {
+        actionCompleted("decreasePrice");
         for(Stock s :stocks)
             if(s.getName().equals(stockName)) {
                 s.getPc().decreasePrice(percentage);
@@ -136,6 +148,7 @@ public class Services {
     }
 
     public static void mostExpensive(Set<Stock> stocks, String stockName) {
+        actionCompleted("mostExpensive");
         for(Stock s :stocks)
             if(s.getName().equals(stockName)) {
                 if (s.getPc().mostExpensive().getPrice() > s.getEl().mostExpensive().getPrice())
@@ -146,6 +159,7 @@ public class Services {
     }
 
     public static void addStock(Set<Stock> stocks) {
+        actionCompleted("addStock");
         Scanner in=new Scanner(System.in);
         System.out.println("Introduceti numele stocului");
         String stockName=in.next();
@@ -251,10 +265,12 @@ public class Services {
     }
 
     public static void deleteStock(Set<Stock> stocks, String stockName) {
+        actionCompleted("deleteStock");
         stocks.removeIf(s -> s.getName().equals(stockName));
     }
 
     public static void distributorProducts (Set<Stock> stocks, String distributorName) {
+        actionCompleted("printDistributorProducts");
         for(Stock s :stocks) {
             for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
                 if(entry.getKey().getDistributor().getName().equals(distributorName))
@@ -266,6 +282,7 @@ public class Services {
     }
 
     public static void printParfums (Set<Stock> stocks) {
+        actionCompleted("printParfums");
         for(Stock s :stocks) {
             for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
                 if(entry.getKey() instanceof Parfum)

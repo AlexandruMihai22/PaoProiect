@@ -39,6 +39,7 @@ public class Main {
         Set<Stock> stocks = new TreeSet<>(abc);
 
         Services.addProductsFromCSV(stock1,Services.readProducts());
+        Services.writeProductInCSV(stocks);
         Services.display();
         System.out.println("Cate servicii doriti?");
         int nr_services=in.nextInt();
