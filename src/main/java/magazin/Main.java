@@ -15,6 +15,9 @@ public class Main {
         int i;
         Distributor distributor1 = new Distributor("EuroItalia", "Milano, Str 12", "0822222");
         Distributor distributor2 = new Distributor("RoDistrib", "Bucuresti, Str Dunarii", "0723456");
+        List<Distributor> distributors = new ArrayList<>();
+        distributors.add(distributor1);
+        distributors.add(distributor2);
         Parfum parfum1 = new Parfum("Sauvage", 100, "blue", distributor1, "fresh");
         Shampoo shampoo1 = new Shampoo("Gerovi", 50, "white", distributor1, "uscat");
         Laptop laptop1 = new Laptop("ddd",1000,"black", distributor2,"dd");
@@ -28,15 +31,14 @@ public class Main {
         map2.put(camera1,10);
         Electronics el = new Electronics(map2);
 
-        Stock stock1 = new Stock("StockMartie", pc, el);
-
+        Stock stock1 = new Stock("1", pc, el);
         Scanner in=new Scanner(System.in);
 
         List<Stock> abc = new ArrayList<>();
         abc.add(stock1);
         Set<Stock> stocks = new TreeSet<>(abc);
 
-
+        Services.addProductsFromCSV(stock1,Services.readProducts());
         Services.display();
         System.out.println("Cate servicii doriti?");
         int nr_services=in.nextInt();

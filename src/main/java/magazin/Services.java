@@ -4,10 +4,12 @@ import magazin.distribuitori.Distributor;
 import magazin.produse.*;
 import magazin.stocuri.Stock;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.Set;
+import java.io.BufferedWriter;
+import java.io.*;
+import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Services {
 
@@ -30,11 +32,46 @@ public class Services {
         );
     }
 
+    public static List<Product> readProducts() {
+        return Singleton.getInstance().readProducts("Products.csv");
+    }
+
+    public static void addProductsFromCSV(Stock s, List<Product> products ){
+        for(Product product : products)
+            addProduct(s,product,1);
+    }
+
+    public static void writeProductInCSV(Set<Stock>stocks) {
+        for(Stock s :stocks) {
+            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet()) {
+                if (entry.getKey() instanceof Laptop) {
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Laptop) entry.getKey()).getProcesor()};
+                    Singleton.getInstance().writeProducts("Laptops.csv", data);
+                }
+                if (entry.getKey() instanceof Camera) {
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), Integer.toString(((Camera) entry.getKey()).getMegapixels())};
+                    Singleton.getInstance().writeProducts("Cameras.csv", data);
+                }
+            }
+            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet()) {
+                if (entry.getKey() instanceof Parfum) {
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Parfum) entry.getKey()).getParfumType()};
+                    Singleton.getInstance().writeProducts("Parfums.csv", data);
+                }
+                if (entry.getKey() instanceof Shampoo) {
+                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Shampoo) entry.getKey()).getHairType()};
+                    Singleton.getInstance().writeProducts("Shampoos.csv", data);
+                }
+            }
+        }
+    }
+
     public static void addProduct(Stock s, Product product, int numberOfProducts) {
-                if(product instanceof Shampoo ||product instanceof Parfum)
-                    s.getPc().addProduct(product, numberOfProducts);
-                else if(product instanceof Laptop ||product instanceof Camera)
-                    s.getEl().addProduct(product, numberOfProducts);
+
+        if(product instanceof Shampoo ||product instanceof Parfum)
+            s.getPc().addProduct(product, numberOfProducts);
+        else if(product instanceof Laptop ||product instanceof Camera)
+            s.getEl().addProduct(product, numberOfProducts);
     }
 
     public static void display(Set<Stock> stocks){
