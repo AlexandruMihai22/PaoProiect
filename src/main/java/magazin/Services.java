@@ -52,29 +52,48 @@ public class Services {
     }
 
     public static void writeProductInCSV(Product product, Integer nr) {
-
                 if (product instanceof Laptop) {
                     String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Laptop) product).getProcesor(), Integer.toString(nr)};
-                    Singleton.getInstance().writeProducts("Laptops.csv", data);
+                    Singleton.getInstance().writeInCsv("Laptops.csv", data);
                 }
                 if (product instanceof Camera) {
                     String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), Integer.toString(((Camera) product).getMegapixels()), Integer.toString(nr)};
-                    Singleton.getInstance().writeProducts("Cameras.csv", data);
+                    Singleton.getInstance().writeInCsv("Cameras.csv", data);
                 }
 
                 if (product instanceof Parfum) {
                     String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Parfum) product).getParfumType(), Integer.toString(nr)};
-                    Singleton.getInstance().writeProducts("Parfums.csv", data);
+                    Singleton.getInstance().writeInCsv("Parfums.csv", data);
                 }
                 if (product instanceof Shampoo) {
                     String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Shampoo) product).getHairType(), Integer.toString(nr)};
-                    Singleton.getInstance().writeProducts("Shampoos.csv", data);
+                    Singleton.getInstance().writeInCsv("Shampoos.csv", data);
                 }
         }
 
+    public static List<Distributor> readDistributors() {
+        return Singleton.getInstance().readDistributors("ReadDistributors.csv");
+    }
+
+    public static void addDistributorsFromCSV(ArrayList<Distributor> distributors, List<Distributor> distribList ){
+        for(Distributor distributor :distribList)
+            addDistributor(distributors, distributor);
+    }
+
+    public static void writeDistributorsInCSV(ArrayList<Distributor> distributors) {
+        for(Distributor distributor :distributors)
+            writeDistributorInCSV(distributor);
+        }
+
+
+    public static void writeDistributorInCSV(Distributor distributor) {
+        String[] data = {distributor.getName(), distributor.getAddress(), distributor.getPhoneNumber()};
+        Singleton.getInstance().writeInCsv("Distributors.csv", data);
+    }
+
     public static void actionCompleted(String name){
         String [] data = {name, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date())};
-        Singleton.getInstance().writeProducts("Actions.csv", data);
+        Singleton.getInstance().writeInCsv("Actions.csv", data);
     }
 
     public static void addProduct(Stock s, Product product, int numberOfProducts) {
@@ -84,6 +103,12 @@ public class Services {
             s.getPc().addProduct(product, numberOfProducts);
         else if(product instanceof Laptop ||product instanceof Camera)
             s.getEl().addProduct(product, numberOfProducts);
+    }
+
+    public static void addDistributor(ArrayList<Distributor> distributors, Distributor distributor) {
+        actionCompleted("addDistributor");
+        writeDistributorInCSV(distributor);
+        distributors.add(distributor);
     }
 
     public static void display(Set<Stock> stocks){
@@ -191,8 +216,10 @@ public class Services {
             System.out.println("Care este numarul de telefon al distribuitorului?");
             String distributorPhoneNumber = in.next();
             Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            writeDistributorInCSV(productDistributor);
             Parfum parfum = new Parfum(productName, productPrice, productColor, productDistributor, parfumType);
             addProduct(stock, parfum , nr);
+            writeProductInCSV(parfum, nr);
         }
 
         System.out.println("Cate produse de tip Sampon doriti sa aiba stocul?");
@@ -215,8 +242,10 @@ public class Services {
             System.out.println("Care este numarul de telefon al distribuitorului?");
             String distributorPhoneNumber = in.next();
             Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            writeDistributorInCSV(productDistributor);
             Shampoo shampoo = new Shampoo(productName, productPrice, productColor, productDistributor, shampooType);
             addProduct(stock, shampoo , nr);
+            writeProductInCSV(shampoo, nr);
         }
 
         System.out.println("Cate produse de tip Laptop doriti sa aiba stocul?");
@@ -239,8 +268,10 @@ public class Services {
             System.out.println("Care este numarul de telefon al distribuitorului?");
             String distributorPhoneNumber = in.next();
             Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            writeDistributorInCSV(productDistributor);
             Laptop laptop = new Laptop(productName, productPrice, productColor, productDistributor, procesorType);
             addProduct(stock, laptop , nr);
+            writeProductInCSV(laptop, nr);
         }
 
         System.out.println("Cate produse de tip Camera doriti sa aiba stocul?");
@@ -263,8 +294,10 @@ public class Services {
             System.out.println("Care este numarul de telefon al distribuitorului?");
             String distributorPhoneNumber = in.next();
             Distributor productDistributor = new Distributor(distributorName, distributorAddress, distributorPhoneNumber);
+            writeDistributorInCSV(productDistributor);
             Camera camera = new Camera(productName, productPrice, productColor, productDistributor, megapixels);
             addProduct(stock, camera , nr);
+            writeProductInCSV(camera, nr);
         }
 
         stocks.add(stock);

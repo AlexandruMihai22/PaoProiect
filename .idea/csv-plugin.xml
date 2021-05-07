@@ -17,6 +17,13 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Distributors.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Laptops.csv">
           <value>
             <Attribute>
@@ -32,6 +39,13 @@
           </value>
         </entry>
         <entry key="\Products.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\ReadDistributors.csv">
           <value>
             <Attribute>
               <option name="separator" value="," />

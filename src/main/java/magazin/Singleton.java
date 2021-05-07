@@ -82,7 +82,32 @@ public class Singleton {
         return products;
     }
 
-    public void writeProducts(String filePath, String[] data){
+    public List<Distributor> readDistributors(String file)
+    {   List<Distributor> distributors = new ArrayList<>();
+
+        try {
+            // Create an object of file reader
+            // class with CSV file as a parameter.
+            FileReader filereader = new FileReader(file);
+
+            // create csvReader object and skip first Line
+            CSVReader csvReader = new CSVReaderBuilder(filereader)
+                    .withSkipLines(0)
+                    .build();
+            List<String[]> allData = csvReader.readAll();
+            for (String[] row : allData)
+                if (row[0].equals("Distributor")) {
+                    Distributor distributor = new Distributor(row[1], row[2], row[3]);
+                    distributors.add(distributor);
+                }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return distributors;
+    }
+
+    public void writeInCsv(String filePath, String[] data){
         // first create file object for file placed at location
         // specified by filepath
         File file = new File(filePath);
@@ -100,7 +125,6 @@ public class Singleton {
             writer.close();
         }
         catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

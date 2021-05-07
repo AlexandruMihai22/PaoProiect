@@ -15,7 +15,7 @@ public class Main {
         int i;
         Distributor distributor1 = new Distributor("EuroItalia", "Milano, Str 12", "0822222");
         Distributor distributor2 = new Distributor("RoDistrib", "Bucuresti, Str Dunarii", "0723456");
-        List<Distributor> distributors = new ArrayList<>();
+        ArrayList<Distributor> distributors = new ArrayList<>();
         distributors.add(distributor1);
         distributors.add(distributor2);
         Parfum parfum1 = new Parfum("Sauvage", 100, "blue", distributor1, "fresh");
@@ -38,8 +38,11 @@ public class Main {
         abc.add(stock1);
         Set<Stock> stocks = new TreeSet<>(abc);
 
-        Services.addProductsFromCSV(stock1,Services.readProducts());
         Services.writeProductsInCSV(stocks);
+        Services.addProductsFromCSV(stock1, Services.readProducts());
+        Services.writeDistributorsInCSV(distributors);
+        Services.addDistributorsFromCSV(distributors, Services.readDistributors());
+
         Services.display();
         System.out.println("Cate servicii doriti?");
         int nr_services=in.nextInt();
