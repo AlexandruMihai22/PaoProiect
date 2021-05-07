@@ -97,8 +97,6 @@ public class Singleton {
     }
 
     public void writeInCsv(String filePath, String[] data) {
-        // first create file object for file placed at location
-        // specified by filepath
         File file = new File(filePath);
         try {
             // create FileWriter object with file as parameter
@@ -124,7 +122,4 @@ public class Singleton {
         }
 
     }
-
-
-
 }
