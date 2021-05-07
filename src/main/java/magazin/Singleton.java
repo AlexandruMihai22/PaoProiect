@@ -6,10 +6,7 @@ import com.opencsv.CSVWriter;
 import magazin.distribuitori.Distributor;
 import magazin.produse.*;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -91,8 +88,10 @@ public class Singleton {
         File file = new File(filePath);
         try {
             // create FileWriter object with file as parameter
-            FileWriter outputfile = new FileWriter(file);
+            if(!file.exists())
+                file.createNewFile();
 
+            PrintWriter outputfile = new PrintWriter(new FileWriter(file, true));
             // create CSVWriter object filewriter object as parameter
             CSVWriter writer = new CSVWriter(outputfile);
             writer.writeNext(data);

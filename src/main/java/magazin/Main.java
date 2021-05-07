@@ -31,7 +31,7 @@ public class Main {
         map2.put(camera1,10);
         Electronics el = new Electronics(map2);
 
-        Stock stock1 = new Stock("1", pc, el);
+        Stock stock1 = new Stock("Stock1", pc, el);
         Scanner in=new Scanner(System.in);
 
         List<Stock> abc = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Main {
         Set<Stock> stocks = new TreeSet<>(abc);
 
         Services.addProductsFromCSV(stock1,Services.readProducts());
-        Services.writeProductInCSV(stocks);
+        Services.writeProductsInCSV(stocks);
         Services.display();
         System.out.println("Cate servicii doriti?");
         int nr_services=in.nextInt();

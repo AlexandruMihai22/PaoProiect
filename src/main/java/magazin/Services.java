@@ -42,30 +42,35 @@ public class Services {
             addProduct(s,product,1);
     }
 
-    public static void writeProductInCSV(Set<Stock>stocks) {
+    public static void writeProductsInCSV(Set<Stock>stocks) {
         for(Stock s :stocks) {
-            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet()) {
-                if (entry.getKey() instanceof Laptop) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Laptop) entry.getKey()).getProcesor(), Integer.toString(entry.getValue())};
-                    Singleton.getInstance().writeProducts("Laptops.csv", data);
-                }
-                if (entry.getKey() instanceof Camera) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), Integer.toString(((Camera) entry.getKey()).getMegapixels()), Integer.toString(entry.getValue())};
-                    Singleton.getInstance().writeProducts("Cameras.csv", data);
-                }
-            }
-            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet()) {
-                if (entry.getKey() instanceof Parfum) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Parfum) entry.getKey()).getParfumType(), Integer.toString(entry.getValue())};
-                    Singleton.getInstance().writeProducts("Parfums.csv", data);
-                }
-                if (entry.getKey() instanceof Shampoo) {
-                    String[] data = {entry.getKey().getName(), Integer.toString(entry.getKey().getPrice()), entry.getKey().getColor(), entry.getKey().getDistributor().getName(), ((Shampoo) entry.getKey()).getHairType(), Integer.toString(entry.getValue())};
-                    Singleton.getInstance().writeProducts("Shampoos.csv", data);
-                }
-            }
+            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
+                writeProductInCSV(entry.getKey(), entry.getValue());
+            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
+                writeProductInCSV(entry.getKey(), entry.getValue());
         }
     }
+
+    public static void writeProductInCSV(Product product, Integer nr) {
+
+                if (product instanceof Laptop) {
+                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Laptop) product).getProcesor(), Integer.toString(nr)};
+                    Singleton.getInstance().writeProducts("Laptops.csv", data);
+                }
+                if (product instanceof Camera) {
+                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), Integer.toString(((Camera) product).getMegapixels()), Integer.toString(nr)};
+                    Singleton.getInstance().writeProducts("Cameras.csv", data);
+                }
+
+                if (product instanceof Parfum) {
+                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Parfum) product).getParfumType(), Integer.toString(nr)};
+                    Singleton.getInstance().writeProducts("Parfums.csv", data);
+                }
+                if (product instanceof Shampoo) {
+                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Shampoo) product).getHairType(), Integer.toString(nr)};
+                    Singleton.getInstance().writeProducts("Shampoos.csv", data);
+                }
+        }
 
     public static void actionCompleted(String name){
         String [] data = {name, new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date())};
@@ -74,6 +79,7 @@ public class Services {
 
     public static void addProduct(Stock s, Product product, int numberOfProducts) {
         actionCompleted("addProduct");
+        writeProductInCSV(product, numberOfProducts);
         if(product instanceof Shampoo ||product instanceof Parfum)
             s.getPc().addProduct(product, numberOfProducts);
         else if(product instanceof Laptop ||product instanceof Camera)
