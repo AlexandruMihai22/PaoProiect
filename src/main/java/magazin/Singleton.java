@@ -41,8 +41,6 @@ public class Singleton {
             // Create an object of file reader
             // class with CSV file as a parameter.
             FileReader filereader = new FileReader(file);
-
-            // create csvReader object and skip first Line
             CSVReader csvReader = new CSVReaderBuilder(filereader)
                     .withSkipLines(0)
                     .build();
