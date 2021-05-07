@@ -13,16 +13,9 @@ import java.util.UUID;
 
 public class Singleton {
     private static Singleton instance;
-    private String id;
 
-    private Singleton(){
-        id = UUID.randomUUID().toString();
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
+    private Singleton(){ }
+
     public static Singleton getInstance(){
         if(instance == null){
             synchronized (Singleton.class){
@@ -39,9 +32,6 @@ public class Singleton {
         if(instance == null){
             instance = new Singleton();
         }
-    }
-    public String getId() {
-        return id;
     }
 
     public List<Product> readProducts(String file)
@@ -90,7 +80,6 @@ public class Singleton {
             // class with CSV file as a parameter.
             FileReader filereader = new FileReader(file);
 
-            // create csvReader object and skip first Line
             CSVReader csvReader = new CSVReaderBuilder(filereader)
                     .withSkipLines(0)
                     .build();
@@ -107,13 +96,13 @@ public class Singleton {
         return distributors;
     }
 
-    public void writeInCsv(String filePath, String[] data){
+    public void writeInCsv(String filePath, String[] data) {
         // first create file object for file placed at location
         // specified by filepath
         File file = new File(filePath);
         try {
             // create FileWriter object with file as parameter
-            if(!file.exists())
+            if (!file.exists())
                 file.createNewFile();
 
             PrintWriter outputfile = new PrintWriter(new FileWriter(file, true));
@@ -123,10 +112,19 @@ public class Singleton {
 
             // closing writer connection
             writer.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
+    public void createNewFile(String filePath) {
+        try {
+            Writer fileWriter = new FileWriter(filePath, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 }

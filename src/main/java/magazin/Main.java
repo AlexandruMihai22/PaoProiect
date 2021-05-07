@@ -38,6 +38,13 @@ public class Main {
         abc.add(stock1);
         Set<Stock> stocks = new TreeSet<>(abc);
 
+        Singleton.getInstance().createNewFile("Laptops.csv");
+        Singleton.getInstance().createNewFile("Cameras.csv");
+        Singleton.getInstance().createNewFile("Parfums.csv");
+        Singleton.getInstance().createNewFile("Shampoos.csv");
+        Singleton.getInstance().createNewFile("Actions.csv");
+        Singleton.getInstance().createNewFile("Distributors.csv");
+
         Services.writeProductsInCSV(stocks);
         Services.addProductsFromCSV(stock1, Services.readProducts());
         Services.writeDistributorsInCSV(distributors);
