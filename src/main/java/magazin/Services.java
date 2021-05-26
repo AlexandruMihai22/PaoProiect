@@ -33,6 +33,8 @@ public class Services {
         );
     }
 
+    //etapa2
+
     public static List<Product> readProducts() {
         return Singleton.getInstance().readProducts("Products.csv");
     }
@@ -42,34 +44,38 @@ public class Services {
             addProduct(s,product,1);
     }
 
-    public static void writeProductsInCSV(Set<Stock>stocks) {
+    public static void storeCurentProducts(Set<Stock>stocks) {
         for(Stock s :stocks) {
-            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
+            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet()) {
                 writeProductInCSV(entry.getKey(), entry.getValue());
-            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
+                insertProduct(entry.getKey(), entry.getValue(), s.getName());
+            }
+            for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet()) {
                 writeProductInCSV(entry.getKey(), entry.getValue());
+                insertProduct(entry.getKey(), entry.getValue(), s.getName());
+            }
         }
     }
 
     public static void writeProductInCSV(Product product, Integer nr) {
-                if (product instanceof Laptop) {
-                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Laptop) product).getProcesor(), Integer.toString(nr)};
-                    Singleton.getInstance().writeInCsv("Laptops.csv", data);
-                }
-                if (product instanceof Camera) {
-                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), Integer.toString(((Camera) product).getMegapixels()), Integer.toString(nr)};
-                    Singleton.getInstance().writeInCsv("Cameras.csv", data);
-                }
-
-                if (product instanceof Parfum) {
-                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Parfum) product).getParfumType(), Integer.toString(nr)};
-                    Singleton.getInstance().writeInCsv("Parfums.csv", data);
-                }
-                if (product instanceof Shampoo) {
-                    String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Shampoo) product).getHairType(), Integer.toString(nr)};
-                    Singleton.getInstance().writeInCsv("Shampoos.csv", data);
-                }
+        if (product instanceof Laptop) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Laptop) product).getProcesor(), Integer.toString(nr)};
+            Singleton.getInstance().writeInCsv("Laptops.csv", data);
         }
+        if (product instanceof Camera) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), Integer.toString(((Camera) product).getMegapixels()), Integer.toString(nr)};
+            Singleton.getInstance().writeInCsv("Cameras.csv", data);
+        }
+
+        if (product instanceof Parfum) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Parfum) product).getParfumType(), Integer.toString(nr)};
+            Singleton.getInstance().writeInCsv("Parfums.csv", data);
+        }
+        if (product instanceof Shampoo) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Shampoo) product).getHairType(), Integer.toString(nr)};
+            Singleton.getInstance().writeInCsv("Shampoos.csv", data);
+        }
+    }
 
     public static List<Distributor> readDistributors() {
         return Singleton.getInstance().readDistributors("ReadDistributors.csv");
@@ -80,10 +86,12 @@ public class Services {
             addDistributor(distributors, distributor);
     }
 
-    public static void writeDistributorsInCSV(ArrayList<Distributor> distributors) {
-        for(Distributor distributor :distributors)
+    public static void storeCurentDistributors(ArrayList<Distributor> distributors) {
+        for(Distributor distributor :distributors) {
             writeDistributorInCSV(distributor);
+            insertDistributor(distributor);
         }
+    }
 
 
     public static void writeDistributorInCSV(Distributor distributor) {
@@ -96,8 +104,72 @@ public class Services {
         Singleton.getInstance().writeInCsv("Actions.csv", data);
     }
 
+
+    //etapa3
+    public static void insertProduct(Product product, int quantity, String stockName) {
+        if (product instanceof Laptop) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Laptop) product).getProcesor(), Integer.toString(quantity), stockName};
+            Database.getDatabaseInstance().insertProduct(data, "laptops");
+        }
+        if (product instanceof Camera) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), Integer.toString(((Camera) product).getMegapixels()), Integer.toString(quantity), stockName};
+            Database.getDatabaseInstance().insertProduct(data, "cameras");
+        }
+
+        if (product instanceof Parfum) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Parfum) product).getParfumType(), Integer.toString(quantity), stockName};
+            Database.getDatabaseInstance().insertProduct(data, "parfums");
+        }
+
+        if (product instanceof Shampoo) {
+            String[] data = {product.getName(), Integer.toString(product.getPrice()), product.getColor(), product.getDistributor().getName(), ((Shampoo) product).getHairType(), Integer.toString(quantity), stockName};
+            Database.getDatabaseInstance().insertProduct(data, "shampoos");
+        }
+    }
+
+    private static void insertDistributor(Distributor distributor) {
+        String[] data = {distributor.getName(), distributor.getAddress(), distributor.getPhoneNumber()};
+        Database.getDatabaseInstance().insertDistributor(data);
+    }
+
+    private static void deleteProduct(Product product) {
+        if (product instanceof Laptop) {
+            Database.getDatabaseInstance().deleteProduct(product.getName(), "laptops");
+        }
+        if (product instanceof Camera) {
+            Database.getDatabaseInstance().deleteProduct(product.getName(), "cameras");
+        }
+
+        if (product instanceof Parfum) {
+            Database.getDatabaseInstance().deleteProduct(product.getName(), "parfums");
+        }
+
+        if (product instanceof Shampoo) {
+            Database.getDatabaseInstance().deleteProduct(product.getName(), "shampoos");
+        }
+    }
+
+    private static void updatePrice(Product product, int newPrice) {
+        if(product instanceof Parfum)
+            Database.getDatabaseInstance().updateProductPrice("parfums", product.getName(), Integer.toString(newPrice));
+        else if (product instanceof Shampoo)
+            Database.getDatabaseInstance().updateProductPrice("shampoos", product.getName(), Integer.toString(newPrice));
+        else if (product instanceof Laptop)
+            Database.getDatabaseInstance().updateProductPrice("laptops", product.getName(), Integer.toString(newPrice));
+        else if (product instanceof Camera)
+            Database.getDatabaseInstance().updateProductPrice("cameras", product.getName(), Integer.toString(newPrice));
+    }
+
+
+
+
+
+
+    //etapa1
+
     public static void addProduct(Stock s, Product product, int numberOfProducts) {
         actionCompleted("addProduct");
+        insertProduct(product, numberOfProducts,s.getName());
         writeProductInCSV(product, numberOfProducts);
         if(product instanceof Shampoo ||product instanceof Parfum)
             s.getPc().addProduct(product, numberOfProducts);
@@ -108,6 +180,7 @@ public class Services {
     public static void addDistributor(ArrayList<Distributor> distributors, Distributor distributor) {
         actionCompleted("addDistributor");
         writeDistributorInCSV(distributor);
+        insertDistributor(distributor);
         distributors.add(distributor);
     }
 
@@ -137,10 +210,19 @@ public class Services {
         for(Stock s :stocks)
             if(s.getName().equals(stockName))
             {   if (s.getPc().SearchProduct(productName))
-                    s.getPc().modifyPrice(productName, newPrice);
+                    for(Product product :s.getPc().getProducts().keySet())
+                        if (product.getName().equals(productName)) {
+                            product.setPrice(newPrice);
+                            updatePrice(product, newPrice);
+                        }
                 if (s.getEl().SearchProduct(productName))
-                    s.getEl().modifyPrice(productName, newPrice);
+                    for(Product product :s.getEl().getProducts().keySet())
+                        if (product.getName().equals(productName)) {
+                            product.setPrice(newPrice);
+                            updatePrice(product, newPrice);
+                        }
             }
+
     }
 
     public static void checkPrice(Set<Stock> stocks, String stockName, String productName) {
@@ -245,7 +327,6 @@ public class Services {
             writeDistributorInCSV(productDistributor);
             Shampoo shampoo = new Shampoo(productName, productPrice, productColor, productDistributor, shampooType);
             addProduct(stock, shampoo , nr);
-            writeProductInCSV(shampoo, nr);
         }
 
         System.out.println("Cate produse de tip Laptop doriti sa aiba stocul?");
@@ -271,7 +352,6 @@ public class Services {
             writeDistributorInCSV(productDistributor);
             Laptop laptop = new Laptop(productName, productPrice, productColor, productDistributor, procesorType);
             addProduct(stock, laptop , nr);
-            writeProductInCSV(laptop, nr);
         }
 
         System.out.println("Cate produse de tip Camera doriti sa aiba stocul?");
@@ -297,7 +377,6 @@ public class Services {
             writeDistributorInCSV(productDistributor);
             Camera camera = new Camera(productName, productPrice, productColor, productDistributor, megapixels);
             addProduct(stock, camera , nr);
-            writeProductInCSV(camera, nr);
         }
 
         stocks.add(stock);

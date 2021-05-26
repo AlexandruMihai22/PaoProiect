@@ -44,9 +44,9 @@ public class Main {
         Singleton.getInstance().createNewFile("Shampoos.csv");
         Singleton.getInstance().createNewFile("Actions.csv");
         Singleton.getInstance().createNewFile("Distributors.csv");
-        Services.writeProductsInCSV(stocks);
+        Services.storeCurentProducts(stocks);
         Services.addProductsFromCSV(stock1, Services.readProducts());
-        Services.writeDistributorsInCSV(distributors);
+        Services.storeCurentDistributors(distributors);
         Services.addDistributorsFromCSV(distributors, Services.readDistributors());
 
         Services.display();

@@ -40,7 +40,7 @@ public abstract class Category {
     public boolean SearchProduct(String productName) {
        for (Map.Entry<Product, Integer> entry : products.entrySet())
            return entry.getKey().getName().equals(productName);
-        return false;
+       return false;
     }
 
     public void modifyPrice(String productName, int newPrice) {
