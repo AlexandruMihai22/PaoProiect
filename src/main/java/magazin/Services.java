@@ -187,9 +187,9 @@ public class Services {
     public static void display(Set<Stock> stocks){
         actionCompleted("display");
         for(Stock s :stocks) {
-            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
-                System.out.println(entry.getKey());
             for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
+                System.out.println(entry.getKey());
+            for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
                 System.out.println(entry.getKey());
         }
     }

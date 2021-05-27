@@ -1,7 +1,5 @@
 package magazin;
 
-import magazin.produse.Shampoo;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;

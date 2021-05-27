@@ -21,7 +21,7 @@ public abstract class Category {
     }
 
     public Map<Product, Integer> getProducts() {
-        return products;
+        return this.products;
     }
 
     public void setProducts(Map<Product, Integer> products) {
@@ -38,7 +38,7 @@ public abstract class Category {
     }
 
     public boolean SearchProduct(String productName) {
-       for (Map.Entry<Product, Integer> entry : products.entrySet())
+       for (Map.Entry<Product, Integer> entry : this.products.entrySet())
            return entry.getKey().getName().equals(productName);
        return false;
     }
