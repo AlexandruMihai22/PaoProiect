@@ -198,10 +198,18 @@ public class Services {
         actionCompleted("removeProduct");
         for(Stock s :stocks)
             if(s.getName().equals(stockName))
-            {   if (s.getPc().SearchProduct(productName))
-                    s.getPc().removeProduct(productName);
-                if (s.getEl().SearchProduct(productName))
-                    s.getEl().removeProduct(productName);
+            {   for(Product product :s.getPc().getProducts().keySet())
+                    if (product.getName().equals(productName)) {
+                        s.getPc().getProducts().remove(product);
+                        deleteProduct(product);
+                        break;
+                    }
+                for(Product product :s.getEl().getProducts().keySet())
+                    if (product.getName().equals(productName)) {
+                        s.getEl().getProducts().remove(product);
+                        deleteProduct(product);
+                        break;
+                    }
             }
     }
 
@@ -209,17 +217,17 @@ public class Services {
         actionCompleted("modifyPrice");
         for(Stock s :stocks)
             if(s.getName().equals(stockName))
-            {   if (s.getPc().SearchProduct(productName))
-                    for(Product product :s.getPc().getProducts().keySet())
-                        if (product.getName().equals(productName)) {
-                            product.setPrice(newPrice);
-                            updatePrice(product, newPrice);
+            {   for(Product product :s.getPc().getProducts().keySet())
+                    if (product.getName().equals(productName)) {
+                        product.setPrice(newPrice);
+                        updatePrice(product, newPrice);
+                        break;
                         }
-                if (s.getEl().SearchProduct(productName))
-                    for(Product product :s.getEl().getProducts().keySet())
-                        if (product.getName().equals(productName)) {
-                            product.setPrice(newPrice);
-                            updatePrice(product, newPrice);
+                for(Product product :s.getEl().getProducts().keySet())
+                    if (product.getName().equals(productName)) {
+                        product.setPrice(newPrice);
+                        updatePrice(product, newPrice);
+                        break;
                         }
             }
 
@@ -229,12 +237,12 @@ public class Services {
         actionCompleted("checkPrice");
         for (Stock s : stocks)
             if (s.getName().equals(stockName)) {
-                if (s.getPc().SearchProduct(productName)) {
+                if (s.getPc().searchProduct(productName)) {
                     for (Map.Entry<Product, Integer> entry : s.getPc().getProducts().entrySet())
                         if (entry.getKey().getName().equals(productName))
                             System.out.println(entry.getKey().getPrice());
                 }
-                if (s.getEl().SearchProduct(productName)) {
+                if (s.getEl().searchProduct(productName)) {
                     for (Map.Entry<Product, Integer> entry : s.getEl().getProducts().entrySet())
                         if (entry.getKey().getName().equals(productName))
                             System.out.println(entry.getKey().getPrice());

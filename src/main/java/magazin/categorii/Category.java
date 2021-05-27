@@ -37,7 +37,7 @@ public abstract class Category {
         this.products.keySet().removeIf(key -> key.getName().equals(productName));
     }
 
-    public boolean SearchProduct(String productName) {
+    public boolean searchProduct(String productName) {
        for (Map.Entry<Product, Integer> entry : this.products.entrySet())
            return entry.getKey().getName().equals(productName);
        return false;
